@@ -56,10 +56,7 @@
 
 					<div class="collapse navbar-collapse" id="navbarNav">
 						<ul class="navbar-nav mx-auto">
-							<li class="nav-item active">
-								<a class="nav-link" href="#hero">Главная</a>
-							</li>
-
+						
 							<li class="nav-item">
 								<a class="nav-link" href="#about">О нас</a>
 							</li>
@@ -68,7 +65,12 @@
 								<a class="nav-link" href="#timeline">Наши преимущества</a>
 							</li>
 
-							<a class="navbar-brand d-none d-lg-block" href="index.html">
+							<li class="nav-item active">
+								<a class="nav-link" href="#akcii">Акции</a>
+							</li>
+
+
+							<a class="navbar-brand d-none d-lg-block" href="#hero">
 								Nail.Sun
 								<strong class="d-block">Салон красоты</strong>
 							</a>
@@ -263,67 +265,83 @@
 				</div>
 			</section>
 
+			
 	<section class="section-padding pb-0" id="akcii">
 	<div class="container">
 					<div class="row">
-						<div class="col-lg-8 col-12 mx-auto">
-							<div class="booking-form">
-								<h2 class="text-center mb-lg-3 mb-2">Акции</h2>
-								<br>
-								<br>
-								<br>
-							</div>
-						</div>			 
-					</div>				
-		<div class="catalog pb-0">
-			<div class="catalog__item pb-0">
-        <div class="product catalog__product">
-          <img src="img/section-catalog/8.png" alt="" class="product__img">
-          <div class="product__content">
-            <h3 class="product__title">Пенсионная</h3>
-            <p class="product__description">Чеддер, камамбер, эдам</p>
-          </div>
-          <footer class="product__footer">
-            <div class="product__bottom">
-              <div class="product__price">
-                <span class="product__price-value">10</span>
-                <span class="product__currency">Br</span>
-              </div>	
-              <button data-popup="popup-info" class="btn1 product__btn" type="button">ИНФОРМАЦИЯ</button>
-            </div>
-          </footer>
-        </div>
-			</div>
+					<div class="col-lg-8 col-12 mx-auto">
+						<div class="booking-form">
+							<h2 class="text-center mb-lg-3 mb-2">Акции</h2>
+							<br>
+							<br>
+							<br>
+						</div>
+					</div>			 
+				</div>
+				<div class="catalog pb-0">
+				
+	
+	<?php
+	include 'config/db_connnection.php';
+	
+	$conn = OpenCon();
+	$obj = mysqli_query($conn, "Select * from stock");
+                $obj = mysqli_fetch_all($obj);
+        foreach ($obj as $obj){
+			$kek = $obj[3];
+                    echo '
+					<div class="catalog__item pb-0">
+					<div class="product catalog__product">
+					
+	  <img src="'.$obj[5].'" alt="" class="product__img">
+	  <div class="product__content">
+		<h3 class="product__title">'.$obj[1].'</h3>
+		<p class="product__description">'.$obj[2].'</p>
+		<p class="hide product__conditions"><b>'.$obj[3].'</p></b>
+	  </div>
+	  <footer class="product__footer">
+		<div class="product__bottom">
+		  <div class="product__price">
+			<span class="product__price-value">'.$obj[4].'</span>
+			<span class="product__currency">Br</span>
+		  </div>	
+		  <button data-popup="popup-info" class="btn1 product__btn object_btn_info" type="button">ИНФОРМАЦИЯ</button>
+		</div>
+	  </footer>
+	  </div>
+	  </div>
+	';
+}
+echo'
+<div class="popup popup-info">
+<div class="popup_wrapper">
+  <div class="popup_inner">
+	<div class="popup_content">
+	  <button class="btn-close popup_btn-close"></button>
+	  <div class="info">
+		<img class="info_img"  src="" alt="">
+		<div class="object_title_info">
+		  <b>Название акции: </b><span class="info_title"></span><br>
+		  <b>Условия: </b><span class="info_type"></span><br>
+		  <b>Цена: </b><span class="info_price"></span> Br<br>
+		  <b>Описание: </b><span class="info_size"></span><br>
+		</div>
+	  </div>
+	</div>
+  </div>
+</div>
+</div>
+';
+?> 
+	 
+
+
 		</div>
 	</div>
 	</section>
 	
 <!-- Окно информация -->
-<div class="popup popup-info">
-    <div class="popup_wrapper">
-      <div class="popup_inner">
-        <div class="popup_content">
-          <button class="btn-close popup_btn-close"></button>
-          <div class="info">
-            <img class="info_img"  src="img/object-img/1.jpg" alt="">
-            <div class="object_title_info">
-              Наименование: <span class="info_title">Помещение 1</span><br>
-              Тип: <span class="info_type">Офис</span><br>
-              Стоимость: <span class="info_price">25</span> BYN <br>
-              Размер: <span class="info_size">15</span> м^3 <br>
-              Наличие коммуникаций: <span>Имеются</span> <br>
-            </div>
-            <form class="form">
-                <input type="hidden" name="помещение" class="info-title_f"> 
-                <input type="hidden" name="размер" class="info-size_f">
-                <input type="hidden" name="стоимость" class="info-price_f">
-                <input type="hidden" name="тип" class="info-type_f">
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-</div>
+
  <!-- Окно информация -->
 
 	
@@ -335,7 +353,7 @@
 							<h2 class="text-center mb-lg-5 mb-4">Отзывы</h2>
 							<div class="owl-carousel reviews-carousel">
 							<?php
-	include 'config/db_connnection.php';
+	// include 'config/db_connnection.php';
 	$conn = OpenCon();
 	$obj = mysqli_query($conn, "Select * from comments");
                 $obj = mysqli_fetch_all($obj);
@@ -575,6 +593,7 @@ echo '
 		<script src="js/scrollspy.min.js"></script>
 		<script src="js/custom.js"></script>
 		<script src="js/popup.js"></script>
+		<script src="js/object.js"></script>
 
 	</body>
 </html>

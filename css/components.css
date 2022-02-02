@@ -337,6 +337,7 @@
 .product__description {
   margin: 0;
   color: #9f9f9f;
+  
 }
 
 .product__content {
@@ -388,6 +389,11 @@
   background: #ffa650;
   width: 200px;
   padding: 14px 20px;
+}
+
+.hide
+{
+  visibility: hidden;
 }
 
 .product__btn:hover {
