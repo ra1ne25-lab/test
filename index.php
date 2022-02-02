@@ -296,8 +296,8 @@
 	  <img src="'.$obj[5].'" alt="" class="product__img">
 	  <div class="product__content">
 		<h3 class="product__title">'.$obj[1].'</h3>
-		<p class="product__description">'.$obj[2].'</p>
-		<p class="hide product__conditions"><b>'.$obj[3].'</p></b>
+		<p class="product__description">'.$obj[2].'</p>	
+		<p class="hide product__conditions"><b>'.$obj[3].'</p></b>	
 	  </div>
 	  <footer class="product__footer">
 		<div class="product__bottom">
@@ -310,6 +310,7 @@
 	  </footer>
 	  </div>
 	  </div>
+	 
 	';
 }
 echo'

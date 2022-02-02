@@ -1,6 +1,6 @@
 /* btn start */
 .btn1 {
-  background: #ff5441;
+  background: #4e41ff;
   color: #fff;
   display: inline-block;
   padding: 18px 20px;
@@ -386,18 +386,19 @@
 
 .product__btn {
   box-shadow: none;
-  background: #ffa650;
+  background: #247cff;
   width: 200px;
   padding: 14px 20px;
 }
 
 .hide
 {
+  display: none;
   visibility: hidden;
 }
 
 .product__btn:hover {
-  background: #ff7c21;
+  background: #0448a1;
 }
 
 @media (min-width: 993px) and (max-width: 1200px) {
