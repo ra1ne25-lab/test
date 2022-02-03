@@ -391,13 +391,14 @@ CloseCon($conn);
 					</ul>
 					</nav>
 					</div>
-					<div class="catalog pb-0">';
+					<h6></h6>
+					<div class="catalog">';
 				}
         foreach ($obj as $obj){
                     echo '
 				
 					<div class="catalog__item pb-0" data-category="'.$obj[7].'">
-					<br>
+					
 					<div class="product catalog__product">
 	  <img src="'.$obj[4].'" alt="" class="product__img">
 	  <div class="product__content">
