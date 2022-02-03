@@ -57,23 +57,30 @@
 					<div class="collapse navbar-collapse" id="navbarNav">
 						<ul class="navbar-nav mx-auto">
 						
-							<li class="nav-item">
-								<a class="nav-link" href="#about">О нас</a>
-							</li>
+						<li class="nav-item">
+								<a class="nav-link" href="#hero">Главная</a>
+						</li>
 
 							<li class="nav-item">
-								<a class="nav-link" href="#timeline">Наши преимущества</a>
+								<a class="nav-link" href="#about">О нас</a>
 							</li>
 
 							<li class="nav-item active">
 								<a class="nav-link" href="#akcii">Акции</a>
 							</li>
 
+							<li class="nav-item">
+								<a class="nav-link" href="#timeline">Наши преимущества</a>
+							</li>
 
 							<a class="navbar-brand d-none d-lg-block" href="#hero">
 								Nail.Sun
 								<strong class="d-block">Салон красоты</strong>
 							</a>
+
+							<li class="nav-item active">
+								<a class="nav-link" href="#services">Услуги</a>
+							</li>
 
 							<li class="nav-item">
 								<a class="nav-link" href="#reviews">Отзывы</a>
@@ -161,6 +168,7 @@
 			</section>
 
 			<!-- <section class="gallery"> -->
+				
 				<div class="container">
 					<div class="row">
 
@@ -175,6 +183,83 @@
 					</div>
 				</div>
 			</section>
+
+
+			<section class="section-padding pb-0" id="akcii">
+	<div class="container">
+					<div class="row">
+					<div class="col-lg-8 col-12 mx-auto">
+						<div class="booking-form">
+							<h2 class="text-center mb-lg-3 mb-2">Акции</h2>
+						</div>
+					</div>			 
+				</div>
+				<div class="catalog pb-0">
+				
+	
+	<?php
+	require_once 'config/db_connnection.php';
+	$conn = OpenCon();
+	$obj = mysqli_query($conn, "Select * from stock");
+                $obj = mysqli_fetch_all($obj);
+        foreach ($obj as $obj){
+			$kek = $obj[3];
+                    echo '
+					<div class="catalog__item pb-0">
+					<div class="product catalog__product">
+					
+	  <img src="'.$obj[5].'" alt="" class="product__img">
+	  <div class="product__content">
+		<h3 class="product__title">'.$obj[1].'</h3>
+		<p class="product__description">'.$obj[2].'</p>	
+		<p class="hide product__conditions"><b>'.$obj[3].'</p></b>	
+	  </div>
+	  <footer class="product__footer">
+		<div class="product__bottom">
+		  <div class="product__price">
+			<span class="product__price-value">'.$obj[4].'</span>
+			<span class="product__currency">Br</span>
+		  </div>	
+		  <button data-popup="popup-info" class="btn1 product__btn object_btn_info" type="button">ИНФОРМАЦИЯ</button>
+		</div>
+	  </footer>
+	  </div>
+	  </div>
+	 
+	';
+}
+echo'
+<div class="popup popup-info">
+<div class="popup_wrapper">
+  <div class="popup_inner">
+	<div class="popup_content">
+	  <button class="btn-close popup_btn-close"></button>
+	  <div class="info">
+		<img class="info_img"  src="" alt="">
+		<div class="object_title_info">
+		  <b>Название акции: </b><span class="info_title"></span><br>
+		  <b>Условия: </b><span class="info_type"></span><br>
+		  <b>Цена: </b><span class="info_price"></span> Br<br>
+		  <b>Описание: </b><span class="info_size"></span><br>
+		</div>
+	  </div>
+	</div>
+  </div>
+</div>
+</div>
+';
+
+CloseCon($conn);
+?> 
+	 
+
+
+		</div>
+	</div>
+	</section>
+
+
+
 
 			<section class="section-padding pb-0" id="timeline">
 				<div class="container">
@@ -266,78 +351,75 @@
 			</section>
 
 			
-	<section class="section-padding pb-0" id="akcii">
+			<section class="section section-catalog pb-0" id="services">
 	<div class="container">
+
 					<div class="row">
 					<div class="col-lg-8 col-12 mx-auto">
 						<div class="booking-form">
-							<h2 class="text-center mb-lg-3 mb-2">Акции</h2>
-							<br>
-							<br>
-							<br>
-						</div>
+							<h2 class="text-center mb-lg-3 mb-2">Услуги</h2>
+	
+				</div>
 					</div>			 
 				</div>
-				<div class="catalog pb-0">
-				
-	
-	<?php
-	include 'config/db_connnection.php';
-	
+				<div class="container">
+				<nav class="catalog-nav">
+				<ul class="catalog-nav__wrapper">
+				<li class="catalog-nav__item">
+					<button class="catalog-nav__btn is-active" type="button" data-filter="all">Все</button>
+				  </li>
+				<?php
+	require_once 'config\db_connnection.php';
 	$conn = OpenCon();
-	$obj = mysqli_query($conn, "Select * from stock");
-                $obj = mysqli_fetch_all($obj);
+	$obj = mysqli_query($conn, "Select * from services Inner join type on type.id_type=services.id_type");
+	$obj = mysqli_fetch_all($obj);
+	$sql = mysqli_query($conn, "Select * from type");
+          while ($res = mysqli_fetch_array($sql))
+				{
+				echo '
+				
+				  <li class="catalog-nav__item">
+					<button class="catalog-nav__btn" type="button" data-filter="'.$res[1].'">'.$res[1].'</button>
+				  </li>
+				
+			  
+				'
+				;}
+				
+				foreach ($sql as $sql){
+					echo '
+					</ul>
+					</nav>
+					</div>
+					<div class="catalog pb-0">';
+				}
         foreach ($obj as $obj){
-			$kek = $obj[3];
                     echo '
-					<div class="catalog__item pb-0">
+				
+					<div class="catalog__item pb-0" data-category="'.$obj[7].'">
+					<br>
 					<div class="product catalog__product">
-					
-	  <img src="'.$obj[5].'" alt="" class="product__img">
+	  <img src="'.$obj[4].'" alt="" class="product__img">
 	  <div class="product__content">
 		<h3 class="product__title">'.$obj[1].'</h3>
 		<p class="product__description">'.$obj[2].'</p>	
-		<p class="hide product__conditions"><b>'.$obj[3].'</p></b>	
 	  </div>
 	  <footer class="product__footer">
 		<div class="product__bottom">
 		  <div class="product__price">
-			<span class="product__price-value">'.$obj[4].'</span>
+			<span class="product__price-value">'.$obj[3].'</span>
 			<span class="product__currency">Br</span>
-		  </div>	
-		  <button data-popup="popup-info" class="btn1 product__btn object_btn_info" type="button">ИНФОРМАЦИЯ</button>
+		  </div>
+		  <a href="#booking"><button class="btn1 product__btn object_btn_info" type="button">ЗАПИСАТЬСЯ</button></a>
 		</div>
 	  </footer>
 	  </div>
 	  </div>
-	 
 	';
 }
-echo'
-<div class="popup popup-info">
-<div class="popup_wrapper">
-  <div class="popup_inner">
-	<div class="popup_content">
-	  <button class="btn-close popup_btn-close"></button>
-	  <div class="info">
-		<img class="info_img"  src="" alt="">
-		<div class="object_title_info">
-		  <b>Название акции: </b><span class="info_title"></span><br>
-		  <b>Условия: </b><span class="info_type"></span><br>
-		  <b>Цена: </b><span class="info_price"></span> Br<br>
-		  <b>Описание: </b><span class="info_size"></span><br>
-		</div>
-	  </div>
+CloseCon($conn);
+ ?> 
 	</div>
-  </div>
-</div>
-</div>
-';
-?> 
-	 
-
-
-		</div>
 	</div>
 	</section>
 	
@@ -354,7 +436,7 @@ echo'
 							<h2 class="text-center mb-lg-5 mb-4">Отзывы</h2>
 							<div class="owl-carousel reviews-carousel">
 							<?php
-	// include 'config/db_connnection.php';
+	require_once 'config/db_connnection.php';
 	$conn = OpenCon();
 	$obj = mysqli_query($conn, "Select * from comments");
                 $obj = mysqli_fetch_all($obj);
@@ -396,6 +478,7 @@ echo '
 			
                     ';
                 }
+CloseCon($conn);
 	?>
 
 							
@@ -587,6 +670,7 @@ echo '
 		</footer>
 
 		<!-- JAVASCRIPT FILES -->
+		<!-- <script src="js/main.js"></script> -->
 		<script src="js/myLib.js"></script>
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.bundle.min.js"></script>
@@ -595,6 +679,10 @@ echo '
 		<script src="js/custom.js"></script>
 		<script src="js/popup.js"></script>
 		<script src="js/object.js"></script>
+		<script src="js/catalog.js"></script>
+		<script src="https://unpkg.com/focus-visible@5.0.2/dist/focus-visible.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@12.4.0/dist/lazyload.min.js"></script>
+
 
 	</body>
 </html>

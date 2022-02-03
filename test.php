@@ -16,22 +16,22 @@
 
 
 
-<?php
-        for ($rating = 1; $rating<=5; $rating++) {
-    if ($rating <= 1) 
-    {
-        echo 
-        '<i class="bi-star-fill"></i>';
-    }
-    else 
-    {
-        echo 
-        '<i class="bi-star"></i>';
-    }
-
-}
-
-?>
+        <nav class="catalog-nav">
+        <ul class="catalog-nav__wrapper">
+          <li class="catalog-nav__item">
+            <button class="catalog-nav__btn is-active" type="button" data-filter="all">все</button>
+          </li>
+          <li class="catalog-nav__item">
+            <button class="catalog-nav__btn" type="button" data-filter="mushrooms">грибные</button>
+          </li>
+          <li class="catalog-nav__item">
+            <button class="catalog-nav__btn" type="button" data-filter="meat">мясные</button>
+          </li>
+          <li class="catalog-nav__item">
+            <button class="catalog-nav__btn" type="button" data-filter="cheese">сырные</button>
+          </li>
+        </ul>
+      </nav>
 
 
 
