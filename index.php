@@ -1,3 +1,7 @@
+<?php
+@ob_start();
+session_start();
+?>
 <!doctype html>
 <html lang="ru">
 	<head>
@@ -37,6 +41,20 @@
 		<link rel="stylesheet" href="css/header-page.css">
 
 		<link rel="stylesheet" href="css/section-top.css">
+		<!-- <link rel="stylesheet" href="style.css"> -->
+		<script src="js/jquery.min.js"></script>
+<style>
+
+/* .form-control{
+	border-radius: 0px;
+	padding: 15px;
+}
+.btn-primary{
+	border-radius: 0px;
+	padding: 20px;
+
+} */
+</style>
 
 	</head>
 	
@@ -69,18 +87,16 @@
 								<a class="nav-link" href="#akcii">Акции</a>
 							</li>
 
-							<li class="nav-item">
-								<a class="nav-link" href="#timeline">Наши преимущества</a>
+							<li class="nav-item active">
+								<a class="nav-link" href="#services">Услуги</a>
 							</li>
-
+						
 							<a class="navbar-brand d-none d-lg-block" href="#hero">
 								Nail.Sun
 								<strong class="d-block">Салон красоты</strong>
 							</a>
 
-							<li class="nav-item active">
-								<a class="nav-link" href="#services">Услуги</a>
-							</li>
+							
 
 							<li class="nav-item">
 								<a class="nav-link" href="#reviews">Отзывы</a>
@@ -93,12 +109,42 @@
 							<li class="nav-item">
 								<a class="nav-link" href="#contact">Контакты</a>
 							</li>
+
+							<li class="nav-item">
+								<?php
+								if(isset($_SESSION['status']))
+								{?>
+									<a class="nav-link" href="logout.php">Выйти</a><?php
+								}
+								else
+								{?>
+									<a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#loginModal">Войти</a>
+									<?php
+								}
+								?>
+							</li>
+							<li class="nav-item">
+								<?php
+								
+								if(isset($_SESSION['user_name']))
+								{?>
+									<span class="badge bg-primary" style="padding: 5px;font-size:large"><?php echo $_SESSION['user_name'];?></span><?php
+								}
+								else
+								{?>
+									<span></span>
+									<?php
+								}
+								?>
+							</li>
+	
 						</ul>
 					</div>
 
 				</div>
 			</nav>
-
+		<?php include_once('signup_modal.php');?>
+		<?php include_once('login_modal.php');?>
 			<section class="hero" id="hero">
 				<div class="container">
 					<div class="row">
@@ -139,6 +185,8 @@
 									<p class="contact-phone mb-0"><i class="bi-phone"></i> +375 (29) 3741258</p>
 								</div>
 							</div>
+							<?php
+							?>
 						</div>
 
 					</div>
@@ -185,6 +233,8 @@
 			</section>
 
 
+
+			
 			<section class="section-padding pb-0" id="akcii">
 	<div class="container">
 					<div class="row">
@@ -493,7 +543,21 @@ CloseCon($conn);
 				<div class="col-lg-8 col-12 mx-auto">
 				<div class="booking-form">
 				<div class="col-lg-3 col-md-4 col-6 mx-auto">
-				<button type="submit" class="form-control" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" id="submit-button" >Оставить отзыв</button>
+				<?php
+								if(isset($_SESSION['status']))
+								{?>
+									<button type="submit" class="form-control" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" id="submit-button" >Оставить отзыв</button>
+									
+									<?php
+						
+							}
+								else
+								{?>
+									<p>Войдите, чтобы оставить отзыв</p><p></p>
+									<?php
+								}
+								?>
+				
 				</div>
 				</div>
 				</div>
@@ -514,7 +578,22 @@ CloseCon($conn);
 <form action="action.php" method="post" enctype="multipart/form-data">
   <div class="form-group">
     <label for="exampleFormControlInput1">Имя</label>
-    <input name="fio" type="name" class="form-control" id="exampleFormControlInput1" placeholder="Введите имя">
+    <!-- <input name="fio" type="name" class="form-control" id="exampleFormControlInput1" placeholder="Введите имя"> -->
+
+	<?php
+	
+				if(isset($_SESSION['name1']))
+			{?>
+			<input name="fio" type="name" class="form-control" id="exampleFormControlInput1" value="<?php echo $_SESSION['name1'];?>"><?php
+				}
+			else
+				{?>
+					<span></span>
+				<?php
+		}
+		?>
+
+
   </div>
   <div class="form-group">
     <label for="exampleFormControlFile1">Выберите фото</label>
@@ -672,8 +751,9 @@ CloseCon($conn);
 
 		<!-- JAVASCRIPT FILES -->
 		<!-- <script src="js/main.js"></script> -->
+	
 		<script src="js/myLib.js"></script>
-		<script src="js/jquery.min.js"></script>
+
 		<script src="js/bootstrap.bundle.min.js"></script>
 		<script src="js/owl.carousel.min.js"></script>
 		<script src="js/scrollspy.min.js"></script>
@@ -682,8 +762,9 @@ CloseCon($conn);
 		<script src="js/object.js"></script>
 		<script src="js/catalog.js"></script>
 		<script src="https://unpkg.com/focus-visible@5.0.2/dist/focus-visible.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@12.4.0/dist/lazyload.min.js"></script>
-
+		<script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@12.4.0/dist/lazyload.min.js"></script>
 
 	</body>
+	<script>
+</script>
 </html>
