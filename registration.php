@@ -10,7 +10,7 @@ if(isset($_POST['register_btn']))
     $phno       =   $_POST['phno'];
     $pswd       =   $_POST['pswd'];
     $cnfrm_pswd =   $_POST['cnfrm_pswd'];
-    $enc_psw    =   md5($pswd);
+    // $enc_psw    =   md5($pswd);
     if($pswd==$cnfrm_pswd)
     {
         $sql        =   "SELECT * FROM users WHERE username='$username'";
@@ -21,8 +21,10 @@ if(isset($_POST['register_btn']))
             echo"<script>window.location.href = 'index.php';</script>";
             exit();    
         }
-        $sql = "INSERT INTO users (username, surname, `name`, patronymic, email, phone, `password`)
-        VALUES ('$username', '$surname', '$name', '$patronymic', '$email', '$phno', '$enc_psw')";
+        $sql = "
+            SET @salt = SUBSTRING(SHA1(RAND()), 1, 6);
+            INSERT INTO users (username, surname, `name`, patronymic, email, phone, salt, `password`)
+            VALUES ('$username', '$surname', '$name', '$patronymic', '$email', '$phno', @salt, SHA1(CONCAT(@salt, '$pswd')))";
         $conn->exec($sql);
         echo"<script>alert('Вы успешно зарегистрировались!')</script>";
         echo"<script>window.location.href = 'index.php';</script>";
