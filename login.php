@@ -19,6 +19,7 @@ if(isset($_POST['login_btn']))
             // session_start();
             $_SESSION['status'] =   'login';
             $_SESSION['user_name']  =   $row['username'];
+            $_SESSION['user_id']    =   $row['id'];
             $_SESSION['name1']  =   $row['name'];
         }
 

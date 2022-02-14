@@ -5,6 +5,7 @@ session_start();
 <!doctype html>
 <html lang="ru">
 	<head>
+	<link rel="shortcut icon" href="/images/logo.ico" type="image/x-icon">
 		<meta charset="utf-8">
 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -299,7 +300,7 @@ echo'
 </div>
 ';
 
-CloseCon($conn);
+//CloseCon($conn);
 ?> 
 	 
 
@@ -419,8 +420,8 @@ CloseCon($conn);
 					<button class="catalog-nav__btn is-active" type="button" data-filter="all">Все</button>
 				  </li>
 				<?php
-	require_once 'config\db_connnection.php';
-	$conn = OpenCon();
+	//require_once 'config\db_connnection.php';
+	//$conn = OpenCon();
 	$obj = mysqli_query($conn, "Select * from services Inner join type on type.id_type=services.id_type");
 	$obj = mysqli_fetch_all($obj);
 	$sql = mysqli_query($conn, "Select * from type");
@@ -468,7 +469,7 @@ CloseCon($conn);
 	  </div>
 	';
 }
-CloseCon($conn);
+//CloseCon($conn);
  ?> 
 	</div>
 	</div>
@@ -487,9 +488,9 @@ CloseCon($conn);
 							<h2 class="text-center mb-lg-5 mb-4">Отзывы</h2>
 							<div class="owl-carousel reviews-carousel">
 							<?php
-	require_once 'config/db_connnection.php';
-	$conn = OpenCon();
-	$obj = mysqli_query($conn, "Select * from comments");
+//	require_once 'config/db_connnection.php';
+//	$conn = OpenCon();
+	$obj = mysqli_query($conn, "Select * from comments where type = 1");
                 $obj = mysqli_fetch_all($obj);
         foreach ($obj as $obj){
                     echo '
@@ -529,7 +530,7 @@ echo '
 			
                     ';
                 }
-CloseCon($conn);
+//CloseCon($conn);
 	?>
 
 							
@@ -553,7 +554,8 @@ CloseCon($conn);
 							}
 								else
 								{?>
-									<p>Войдите, чтобы оставить отзыв</p><p></p>
+								<br>
+									<p align=center>Войдите, чтобы оставить отзыв</p><p></p>
 									<?php
 								}
 								?>
@@ -572,16 +574,11 @@ CloseCon($conn);
         <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-
-
-	  
 <form action="action.php" method="post" enctype="multipart/form-data">
   <div class="form-group">
     <label for="exampleFormControlInput1">Имя</label>
     <!-- <input name="fio" type="name" class="form-control" id="exampleFormControlInput1" placeholder="Введите имя"> -->
-
-	<?php
-	
+	<?php	
 				if(isset($_SESSION['name1']))
 			{?>
 			<input name="fio" type="name" class="form-control" id="exampleFormControlInput1" value="<?php echo $_SESSION['name1'];?>"><?php
@@ -592,8 +589,6 @@ CloseCon($conn);
 				<?php
 		}
 		?>
-
-
   </div>
   <div class="form-group">
     <label for="exampleFormControlFile1">Выберите фото</label>
@@ -623,13 +618,35 @@ CloseCon($conn);
         	<button  name="send" type="submit" class="btn btn-primary">Отправить</button>
       	</div>
 </form>
-
       </div>
-    
     		</div>
   				</div>
 					</div>
 			<!-- Modal -->
+			 <?php
+			if(isset($_SESSION['status']))
+			{
+				// require_once 'config/db_connnection.php';
+				// $conn = OpenCon();
+				$user_id	=	$_SESSION['user_id'];
+				$sql = "SELECT * FROM users WHERE id='$user_id'";
+				$result = $conn->query($sql);
+				while($row = $result->fetch_assoc())
+				{
+					$user_name	=	$row['name'];
+					$user_email	=	$row['email'];
+					$user_phno	=	$row['phone'];
+				}
+				// CloseCon($conn);
+			}
+			else
+			{
+				$user_name	=	'';
+				$user_email	=	'';
+				$user_phno	=	'';
+			}
+
+			?>
 			
 			<section class="section-padding" id="booking">
 				<div class="container">
@@ -639,50 +656,63 @@ CloseCon($conn);
 							<div class="booking-form">
 								
 								<h2 class="text-center mb-lg-3 mb-2">Записаться на сеанс</h2>
-							
-								<form role="form" action="#booking" method="post">
+								<?php
+								if(isset($_SESSION['status']))
+								{?>
+								<form role="form" action="book_session.php" method="post">
 									<div class="row">
 										<div class="col-lg-6 col-12">
-											<input type="text" name="name" id="name" class="form-control" placeholder="Введите ФИО" required>
+											<input type="text" name="name" id="name" class="form-control" value="<?php echo $user_name;?>" placeholder="Введите ФИО" required>
 										</div>
 
 										<div class="col-lg-6 col-12">
-											<input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Введите Email" required>
+											<input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control" value="<?php echo $user_email;?>" placeholder="Введите Email" required>
 										</div>
 
 										<div class="col-lg-6 col-12 mb-3">
-											<input type="telephone" name="phone" id="phone" pattern="[0-9]{2}-[0-9]{4}-[0-9]{3}" class="form-control" placeholder="Телефон: 29-9248-259" required>
+											<input type="telephone" name="phone" id="phone"  class="form-control" value="<?php echo $user_phno;?>" placeholder="Введите № телефона" required>
 										</div>
 
 										<div class="col-lg-6 col-12 mb-3">
-											<input type="date" name="date" id="date" value="" class="form-control" required>
+											<input type="date" name="date" id="book_date" min="<?php echo date("Y-m-d"); ?>" value="" class="form-control" required>
 											
 										</div>
 
 										<div class="input-group mb-3">
-											<select class="form-select" id="inputGroupSelect01" >
-											  <option selected>Выберите процедуру</option>
-											  <option value="1">Окраска</option>
-											  <option value="2">Мойка</option>
-											  <option value="3">Стрижка</option>
+											<select class="form-select" id="service_select" name="service_select">
+												<option selected value="">Выберите процедур</option>
+											<?php
+											
+												$sql = "SELECT * FROM services";
+												$result = $conn->query($sql);
+												while($row = $result->fetch_assoc())
+												{
+													echo "<option value='".$row['id_services']."'>".$row['name']."</option>";
+												}
+
+											?>
+											</select>
+										</div>
+										<div class="input-group mb-3">
+											<select class="form-select" id="worker_select" name="worker_select">
+											  <option selected value="">Выбрать мастера</option>
+											<?php
+
+												// $sql = "SELECT * FROM employee";
+												// $sql = "SELECT * FROM `services`,`position`,`employee` WHERE `position`.`id_position` = `employee`.`id_employee` AND `position`.`id_type`=`services`.`id_type`";
+
+												// $result = $conn->query($sql);
+												// while($row = $result->fetch_assoc())
+												// {
+												// 	echo "<option value='".$row['id_employee']."'>".$row['name']."</option>";
+												// }
+											?>
 											</select>
 										</div>
 
 										<div class="input-group mb-3">
-											<select class="form-select" id="inputGroupSelect01" >
-											  <option selected>Выберите макстера</option>
-											  <option value="1">Васильев Давид</option>
-											  <option value="2">Колопенько Владислав</option>
-											  <option value="3">Сенько Артур</option>
-											</select>
-										</div>
-
-										<div class="input-group mb-3">
-											<select class="form-select" id="inputGroupSelect01" >
+											<select class="form-select" id="time_slot_select" name="time_slot_select">
 											  <option selected>Выберите время</option>
-											  <option value="1">8:00</option>
-											  <option value="2">10:00</option>
-											  <option value="3">15:00</option>
 											</select>
 										</div>
 										<div class="col-12">
@@ -690,11 +720,19 @@ CloseCon($conn);
 										</div> 
 
 										<div class="col-lg-3 col-md-4 col-6 mx-auto">
-											<button type="submit" class="form-control" id="submit-button">Записаться</button>
+											<button type="submit" class="form-control" name="book_session" id="submit-button">Записаться</button>
 										</div>
 									</div>
 								</form>
-
+								<?php
+						
+					}
+						else
+						{?>
+							<p align = center>Войдите, чтобы записаться</p>
+							<?php
+						}
+						?>
 							</div>
 						</div>
 
@@ -766,5 +804,48 @@ CloseCon($conn);
 
 	</body>
 	<script>
-</script>
+		$(document).ready(function () {
+			function request_send() {
+				var worker = $("#worker_select").val();
+				var service = $("#service_select").val();
+				var book_date = $("#book_date").val();
+				if(book_date != '' && worker != '' && service!='')
+				{
+					$.ajax({
+						type:'POST',
+						url:"ajax_request.php",
+						data:{worker:worker,service:service,book_date:book_date},
+						success: function(response)
+						{
+							$("#time_slot_select").html(response);
+							// alert(response);
+						}
+					});
+				}
+				else
+				{
+					//alert('Fill all');
+				}		
+			}
+			$(document).on("change","#worker_select",function () {
+				request_send();
+			});
+			$(document).on("change","#book_date",function () {
+				request_send();
+			});
+			$(document).on("change","#service_select",function () {
+				var service_select = $("#service_select").val();
+				$.ajax({
+					type:'POST',
+					url:"ajax_request.php",
+					data:{service_select:service_select},
+					success: function(response)
+					{
+						$("#worker_select").html(response);
+						// alert(response);
+					}
+				});
+			});
+		});
+	</script>
 </html>
