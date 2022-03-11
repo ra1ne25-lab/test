@@ -44,6 +44,9 @@ session_start();
 		<link rel="stylesheet" href="css/section-top.css">
 		<!-- <link rel="stylesheet" href="style.css"> -->
 		<script src="js/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 
 /* .form-control{
@@ -177,8 +180,18 @@ session_start();
 										<span class="animated-item">сервис</span>
 									</div>
 								</h1>
-
-								<p class="mb-4">Уютная и комфортная атмосфера для наших гостей, где каждый сможет почувствовать свою исключительность. Мастера салона настоящие эксперты в области совершенствования красоты своих клиентов.</p>
+								<?php
+	require_once 'config/db_connnection.php';
+	$conn = OpenCon();
+$obj = mysqli_query($conn, "Select * from landing");
+                $obj = mysqli_fetch_all($obj);
+        foreach ($obj as $obj){
+                    echo '
+					<p class="mb-4">'.$obj[1].'</p>
+                    ';
+                }
+                ?> 
+								
 
 								<div class="heroLinks d-flex flex-wrap align-items-center">
 									<a class="custom-link me-4" href="#about" data-hover="Узнать больше">Узнать о нас больше</a>
@@ -200,15 +213,35 @@ session_start();
 
 						<div class="col-lg-6 col-md-6 col-12">
 							<h2 class="mb-lg-3 mb-3">Салон «Nain.Sun»</h2>
+							<?php
+	require_once 'config/db_connnection.php';
+	$conn = OpenCon();
+$obj = mysqli_query($conn, "Select * from landing");
+                $obj = mysqli_fetch_all($obj);
+        foreach ($obj as $obj){
+                    echo '
+					<p>'.$obj[2].'</p>
+					<p>'.$obj[3].'</p>
+                    ';
+                }
+                ?> 
 
-							<p>В нашей маникюрне Вы можете подобрать для себя оптимальный набор процедур, позволяющий обрести желанный результат. Мы используем только качественные препараты и современные косметические средства: Sally Hansen, Orly, LCN, O.P.I., ESSIE, которые являются гарантией безупречного внешнего вида и здоровья ваших рук и ног.</p>
-
-							<p>Наше место, где встречаются друзья за чашечкой ароматного чая или чудесного кофе, чтобы отдохнуть от повседневных проблем. Это место, где вас всегда ждут, как старых и добрых друзей.</p>
 						</div>
 
 						<div class="col-lg-4 col-md-5 col-12 mx-auto">
 							<div class="featured-circle bg-white shadow-lg d-flex justify-content-center align-items-center">
-								<p class="featured-text">уже<span class="featured-number">5</span>лет<br> радуем Вас</p>
+							<?php
+	require_once 'config/db_connnection.php';
+	$conn = OpenCon();
+$obj = mysqli_query($conn, "Select * from landing");
+                $obj = mysqli_fetch_all($obj);
+        foreach ($obj as $obj){
+                    echo '
+					<p class="featured-text">уже<span class="featured-number">'.$obj[4].'</span>лет<br> радуем Вас</p>
+                    ';
+                }
+                ?> 
+								
 							</div>
 						</div>
 
@@ -601,7 +634,7 @@ echo '
   </div>
   <div class="form-group">
     <label for="exampleFormControlSelect1">Оцените</label>
-    <select name="ocenka" class="form-control" id="exampleFormControlSelect1">
+    	<select name="ocenka" class="form-control" id="exampleFormControlSelect1">
       <option>1</option>
       <option>2</option>
       <option>3</option>
@@ -660,6 +693,7 @@ echo '
 								if(isset($_SESSION['status']))
 								{?>
 								<form role="form" action="book_session.php" method="post">
+								<input type="hidden" name="from" class="application-info-id">
 									<div class="row">
 										<div class="col-lg-6 col-12">
 											<input type="text" name="name" id="name" class="form-control" value="<?php echo $user_name;?>" placeholder="Введите ФИО" required>
@@ -687,7 +721,7 @@ echo '
 												$result = $conn->query($sql);
 												while($row = $result->fetch_assoc())
 												{
-													echo "<option value='".$row['id_services']."'>".$row['name']."</option>";
+													echo "<option value='".$row['id_services']."'>".$row['name']." | <span> <value='".$row['id_services']."'>".$row['price']." BYN </span></option></option>";
 												}
 
 											?>
@@ -695,7 +729,7 @@ echo '
 										</div>
 										<div class="input-group mb-3">
 											<select class="form-select" id="worker_select" name="worker_select">
-											  <option selected value="">Выбрать мастера</option>
+											  <option selected value="">Выберите мастера</option>
 											<?php
 
 												// $sql = "SELECT * FROM employee";
@@ -739,7 +773,69 @@ echo '
 					</div>
 				</div>
 			</section>
+			
+			<section class="section-padding" id="faq">
+				<div class="container">
+					<div class="row">
+					
+						<div class="col-lg-8 col-12 mx-auto">
+							
+							<div class="faq-form">
+								
+								<h2 class="text-center mb-lg-3 mb-2">FAQ</h2>
+							</div>
+						</div>					
+					</div>
+					<div id="accordion">
+    <div class="card">
+      <div class="card-header">
+        <a class="card-link" data-toggle="collapse" href="#collapseOne">
+		Есть ли у вас парковка?        </a>
+      </div>
+      <div id="collapseOne" class="collapse" data-parent="#accordion">
+        <div class="card-body">
+		Да, рядом с нащим салоном есть возможность парковки.        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+        Можно ли приобрести подарочный сертификат на какой-либо из комплексов услуг?
+      </a>
+      </div>
+      <div id="collapseTwo" class="collapse" data-parent="#accordion">
+        <div class="card-body">
+		Да, конечно. Подарочные сертификаты на любые из наших уникальных комплексов можно посмотреть онлайн на сайте в разделе <b><a href="#akcii"> "Акции" </a></b>.   </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+		Нужно ли с собой брать купальник (плавки), полотенце, сланцы на SPA-процедуры и массаж?
+        </a>
+      </div>
+      <div id="collapseThree" class="collapse" data-parent="#accordion">
+        <div class="card-body">
+		Нет, с собой ничего брать не нужно, только подарочный сертификат, если он у вас есть. Все остальное (свежее полотенце, одноразовое бельё и т.д.) предоставляет салон.        </div>
+      </div>
+    </div>	
+	<div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-toggle="collapse" href="#collapseFour">
+		Можно ли принять душ после SPA-процедуры, массажа?        </a>
+      </div>
+      <div id="collapseFour" class="collapse" data-parent="#accordion">
+        <div class="card-body">
+		Да, конечно! Мы делаем всё для вашего удобства.        </div>
+      </div>
+    </div>	
+				</div>
 
+  </div>
+			</section>
+
+
+  
 		</main>
 
 		<footer class="site-footer section-padding" id="contact">
@@ -752,37 +848,60 @@ echo '
 						<ul class="list-group list-group-flush">
 							<li class="list-group-item d-flex">
 								Понедельник – Пятница
-								<span>10:00 – 22:00</span>
-							</li>
+								<?php
+	require_once 'config/db_connnection.php';
+	$conn = OpenCon();
+$obj = mysqli_query($conn, "Select * from landing");
+                $obj = mysqli_fetch_all($obj);
+        foreach ($obj as $obj){
+                    echo '
+					<span>'.$obj[5].'</span>
+					</li>
 
 							<li class="list-group-item d-flex">
 								Суббота – Воскресенье
-								<span>10:00 – 18:30</span>
+								<span>'.$obj[6].'</span>
 							</li>
+                    ';
+                }
+                ?> 
+	
 						</ul>
 					</div>
 
 					<div class="col-lg-2 col-md-6 col-12 my-4 my-lg-0">
 						<h5 class="mb-lg-4 mb-3">Наш салон</h5>
-
-						<p><a href="mailto:nail.sun@gmail.com">nail.sun@gmail.com</a><p>
-
-						<p>г. Молодечно, <br>ул. Площадь Центральная,<br> д. 1а</p>
+						<?php
+	require_once 'config/db_connnection.php';
+	$conn = OpenCon();
+$obj = mysqli_query($conn, "Select * from landing");
+                $obj = mysqli_fetch_all($obj);
+        foreach ($obj as $obj){
+                    echo '
+					<p><a href="mailto:nail.sun@gmail.com">'.$obj[7].'</a><p>
+					<p>'.$obj[8].'</p>
 					</div>
 
 					<div class="col-lg-3 col-md-6 col-12 ms-auto">
 						<h5 class="mb-lg-4 mb-3">Социальные сети</h5>
 
 						<ul class="social-icon">
-							<li><a href="#" class="social-icon-link bi-facebook"></a></li>
+							<li><a target="_blank" href="'.$obj[9].'" class="social-icon-link bi-facebook"></a></li>
 
-							<li><a href="#" class="social-icon-link bi-twitter"></a></li>
+							<li><a target="_blank" href="'.$obj[10].'" class="social-icon-link bi-twitter"></a></li>
 
-							<li><a href="#" class="social-icon-link bi-instagram"></a></li>
+							<li><a target="_blank" href="'.$obj[11].'" class="social-icon-link bi-instagram"></a></li>
 
-							<li><a href="#" class="social-icon-link bi-youtube"></a></li>
+							<li><a target="_blank" href="'.$obj[12].'" class="social-icon-link bi-youtube"></a></li>
 						</ul>
 					</div>
+                    ';
+                }
+                ?> 
+						
+
+						
+
 				</div>
 			</section>
 		</footer>

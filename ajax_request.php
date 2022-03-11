@@ -12,7 +12,7 @@ if(isset($_POST['worker']))
     $service = $_POST['service'];
     $book_date = $_POST['book_date'];
 
-    $book_sql = "SELECT * FROM booking WHERE worker_id=".$worker." AND  book_date='".$book_date."'";
+    $book_sql = "SELECT * FROM booking WHERE id_employee=".$worker." AND  book_date='".$book_date."'";
 
     $book_result = $conn->query($book_sql);
 
@@ -22,10 +22,10 @@ if(isset($_POST['worker']))
         $arr = [];
         while($record = $book_result->fetch_assoc())
         {
-            $record_time = $record['time_slot_id'];
+            $record_time = $record['id_time_slot'];
             array_push($arr,$record_time);
         }
-        $time_sql = "SELECT * FROM time_slot WHERE  emp_id=".$worker;
+        $time_sql = "SELECT * FROM time_slot WHERE  id_employee=".$worker;
         $time_result = $conn->query($time_sql);
         while($row = $time_result->fetch_assoc())
         {
@@ -41,7 +41,7 @@ if(isset($_POST['worker']))
     }
 
     else{
-        $time_sql = "SELECT * FROM time_slot WHERE emp_id=".$worker;
+        $time_sql = "SELECT * FROM time_slot WHERE id_employee=".$worker;
         $time_result = $conn->query($time_sql);
         while($row = $time_result->fetch_assoc())
         {

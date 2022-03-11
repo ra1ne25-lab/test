@@ -43,7 +43,7 @@
             </div>
             <div class="mb-3">
                 <label for="pwd" class="form-label">№ телефона:</label>
-                <input type="number" class="form-control" id="phno" placeholder="Введите № телефона" name="phno" required>
+                <input type="number" class="form-control" id="phno" placeholder="Введите +375(хх)ххххххх" name="phno" required>
             </div>
             <div class="mb-3">
                 <label for="pwd" class="form-label">Пароль:</label>
@@ -70,3 +70,4 @@
     </div>
   </div>
 </div>
+<script src="js\jquery.min.js"></script>
