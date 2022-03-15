@@ -16,7 +16,27 @@
   transition: color .2s, background .2s, opacity .2s;
 }
 
+.imgblock {
+  position: relative;
+  display: inline-block;
+}
 
+.imgblock img {
+  position	: relative;
+	width		: 100%; /* for IE 6 */
+}
+.imgblock span {
+  /*background: rgba(0,0,0,0.7); (полупрозрачность)*/
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  color: rgba(0,0,0,0.7);
+  border-radius: 2px;
+  position: absolute;
+  right: 0;
+  bottom: 150px;
+  font-size: 60px;
+  padding: 3px 30px;
+}
 
 .btn1:active {
   opacity: 0.8;

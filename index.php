@@ -510,6 +510,11 @@ echo'
 	
 <!-- Окно информация -->
 
+<div class='imgblock'>
+<img src='/upload/47.png' title='БЕСПЛАТНАЯ КОНСУЛЬТАЦИЯ'>
+<span>БЕСПЛАТНАЯ КОНСУЛЬТАЦИЯ<br /><a  href="tel:+375291145454">+375 (29) 3741258</a> А1</span>
+</div>
+
  <!-- Окно информация -->
 
 	
@@ -786,50 +791,30 @@ echo '
 							</div>
 						</div>					
 					</div>
+					<?php
+	require_once 'config/db_connnection.php';
+	$conn = OpenCon();
+$obj = mysqli_query($conn, "Select * from faq");
+                $obj = mysqli_fetch_all($obj);
+        foreach ($obj as $obj){
+                   
+					echo '
 					<div id="accordion">
-    <div class="card">
-      <div class="card-header">
-        <a class="card-link" data-toggle="collapse" href="#collapseOne">
-		Есть ли у вас парковка?        </a>
-      </div>
-      <div id="collapseOne" class="collapse" data-parent="#accordion">
-        <div class="card-body">
-		Да, рядом с нащим салоном есть возможность парковки.        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
-        Можно ли приобрести подарочный сертификат на какой-либо из комплексов услуг?
-      </a>
-      </div>
-      <div id="collapseTwo" class="collapse" data-parent="#accordion">
-        <div class="card-body">
-		Да, конечно. Подарочные сертификаты на любые из наших уникальных комплексов можно посмотреть онлайн на сайте в разделе <b><a href="#akcii"> "Акции" </a></b>.   </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
-		Нужно ли с собой брать купальник (плавки), полотенце, сланцы на SPA-процедуры и массаж?
-        </a>
-      </div>
-      <div id="collapseThree" class="collapse" data-parent="#accordion">
-        <div class="card-body">
-		Нет, с собой ничего брать не нужно, только подарочный сертификат, если он у вас есть. Все остальное (свежее полотенце, одноразовое бельё и т.д.) предоставляет салон.        </div>
-      </div>
-    </div>	
-	<div class="card">
-      <div class="card-header">
-        <a class="collapsed card-link" data-toggle="collapse" href="#collapseFour">
-		Можно ли принять душ после SPA-процедуры, массажа?        </a>
-      </div>
-      <div id="collapseFour" class="collapse" data-parent="#accordion">
-        <div class="card-body">
-		Да, конечно! Мы делаем всё для вашего удобства.        </div>
-      </div>
-    </div>	
-				</div>
+					<div class="card">
+					  <div class="card-header">
+						<a class="card-link" data-toggle="collapse" href="#'.$obj[3].'">
+						'.$obj[1].'        </a>
+					  </div>
+					  <div id="'.$obj[3].'" class="collapse" data-parent="#accordion">
+						<div class="card-body">
+						'.$obj[2].'        </div>
+					  </div>
+					</div>
+					</div>
+					';
+                }
+                ?>
+
 
   </div>
 			</section>
